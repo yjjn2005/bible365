@@ -44,6 +44,12 @@
     return READING_PLAN[day - 1];
   }
 
+  // 대한성서공회로부터 정식 라이선스를 받은 유버전(YouVersion)으로 연결해 실제 본문을 읽도록 함
+  // (저작권 있는 성경 본문 자체를 이 앱에 담지 않고, 링크로 안내)
+  function bibleUrl(book, chapter) {
+    return `https://www.bible.com/ko/bible/88/${book}.${chapter}.KRV`;
+  }
+
   // ---------- Reading hero (today) ----------
   function renderToday() {
     const day = currentDay();
@@ -57,14 +63,16 @@
         <div class="rh-day-label">일 차</div>
       </div>
       <div class="rh-refs">
-        <div class="rh-ref">
+        <a class="rh-ref" href="${bibleUrl('PSA', e.psalm)}" target="_blank" rel="noopener">
           <div class="rh-ref-label">시편</div>
           <div class="rh-ref-value">${e.psalm}편</div>
-        </div>
-        <div class="rh-ref">
+          <div class="rh-ref-link">본문 읽기 →</div>
+        </a>
+        <a class="rh-ref" href="${bibleUrl('PRO', e.proverb)}" target="_blank" rel="noopener">
           <div class="rh-ref-label">잠언</div>
           <div class="rh-ref-value">${e.proverb}장</div>
-        </div>
+          <div class="rh-ref-link">본문 읽기 →</div>
+        </a>
       </div>
       <div class="rh-divider"></div>
       <div class="rh-prompts">
@@ -158,8 +166,10 @@
       row.innerHTML = `
         <span class="rr-day">${day}일</span>
         <span class="rr-refs">시편 ${e.psalm}편 · 잠언 ${e.proverb}장</span>
+        <a class="rr-read" href="${bibleUrl('PSA', e.psalm)}" target="_blank" rel="noopener" title="시편 본문 읽기">읽기</a>
         <span class="rr-check">✓</span>
       `;
+      row.querySelector(".rr-read").addEventListener("click", (ev) => ev.stopPropagation());
       row.addEventListener("click", () => {
         updateRecord(day, { done: !rec.done, doneAt: Date.now() });
         renderRangeList(rangeIdx);

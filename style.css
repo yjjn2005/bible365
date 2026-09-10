@@ -127,6 +127,14 @@ button { font-family: var(--sans); cursor: pointer; }
   background: var(--panel-2);
   padding: 16px 14px;
   text-align: center;
+  display: block;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.rh-ref:active, .rh-ref:hover {
+  border-color: var(--gold-dim);
+  background: #271f2e;
 }
 .rh-ref-label {
   font-size: 14px;
@@ -139,6 +147,12 @@ button { font-family: var(--sans); cursor: pointer; }
   font-weight: 600;
   color: var(--ivory);
   margin-top: 6px;
+}
+.rh-ref-link {
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: var(--gold-dim);
 }
 
 .rh-divider {
@@ -266,6 +280,15 @@ button { font-family: var(--sans); cursor: pointer; }
 }
 .range-row.done .rr-day { color: var(--emerald-bright); }
 .rr-refs { flex: 1; font-size: 16px; color: var(--ivory); }
+.rr-read {
+  font-size: 12.5px;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: 4px 9px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.rr-read:active { background: var(--gold-dim); color: var(--bg); }
 .rr-check {
   width: 22px;
   height: 22px;
