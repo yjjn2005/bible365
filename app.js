@@ -59,6 +59,7 @@
     card.innerHTML = `
       <div class="rh-day">
         <div class="rh-day-num">${day}</div>
+        <div class="rh-day-rule"></div>
         <div class="rh-day-label">일 차 · ${e.label} 전체 ${e.book === "psalm" ? "150편 중" : "완독 후 반복"}</div>
       </div>
       <div class="rh-refs">
@@ -66,8 +67,9 @@
           <span class="rh-ref-body">
             <div class="rh-ref-label">${e.label}</div>
             <div class="rh-ref-value">${e.chapter}${e.suffix}</div>
-            <div class="rh-ref-link">본문 읽기 →</div>
+            <div class="rh-ref-link">본문 읽기</div>
           </span>
+          <span class="rh-ref-chevron">›</span>
         </a>
       </div>
     `;
