@@ -1,0 +1,328 @@
+:root {
+  --ink: #1c2740;
+  --ink-soft: #33415e;
+  --parchment: #faf6ec;
+  --parchment-dim: #f1ead9;
+  --gold: #a9823f;
+  --gold-soft: #cfae6f;
+  --sage: #5f7d5a;
+  --sage-soft: #dfe8db;
+  --charcoal: #2a2a28;
+  --line: #e4dcc8;
+  --serif: "Noto Serif KR", serif;
+  --sans: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--parchment);
+  color: var(--charcoal);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: 48px;
+}
+
+button { font-family: var(--sans); cursor: pointer; }
+
+/* ---- Topbar ---- */
+.topbar {
+  background: var(--ink);
+  color: var(--parchment);
+}
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 20px 20px;
+}
+.mark {
+  font-family: var(--serif);
+  font-size: 30px;
+  color: var(--gold-soft);
+  line-height: 1;
+  border: 1px solid var(--gold-soft);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.titles { flex: 1; }
+.titles h1 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 19px;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+.titles p {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--gold-soft);
+}
+.icon-btn {
+  background: none;
+  border: 1px solid var(--ink-soft);
+  color: var(--parchment);
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  border-radius: 50%;
+}
+.icon-btn:active { background: var(--ink-soft); }
+
+/* ---- Progress strip ---- */
+.progress-strip {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.progress-num {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.progress-num .of {
+  font-size: 16px;
+  color: var(--ink-soft);
+  font-weight: 400;
+  margin-left: 2px;
+}
+.progress-bar {
+  margin-top: 10px;
+  height: 6px;
+  background: var(--parchment-dim);
+  border: 1px solid var(--line);
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--gold);
+  transition: width 0.4s ease;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ---- Today card ---- */
+.today-card {
+  margin: 18px 20px 8px;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+}
+.tc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 18px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.tc-day {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink);
+}
+.tc-date {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.tc-refs {
+  display: flex;
+  gap: 10px;
+  padding: 16px 18px 4px;
+}
+.tc-ref {
+  flex: 1;
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  background: var(--parchment);
+}
+.tc-ref-label {
+  font-size: 11.5px;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+.tc-ref-value {
+  font-family: var(--serif);
+  font-size: 19px;
+  margin-top: 3px;
+  color: var(--ink);
+}
+.tc-prompts {
+  padding: 14px 18px 6px;
+}
+.tc-prompt {
+  margin-bottom: 14px;
+}
+.tc-prompt-q {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.tc-prompt textarea {
+  width: 100%;
+  min-height: 54px;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 8px 10px;
+  font-family: var(--sans);
+  font-size: 14px;
+  resize: vertical;
+  color: var(--charcoal);
+}
+.tc-prompt textarea:focus { outline: 1px solid var(--gold); border-color: var(--gold); }
+
+.tc-foot {
+  padding: 12px 18px 18px;
+}
+.done-btn {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid var(--sage);
+  background: var(--sage-soft);
+  color: var(--sage);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.done-btn.checked {
+  background: var(--sage);
+  color: #fff;
+}
+
+/* ---- Tabs ---- */
+.nav-tabs {
+  display: flex;
+  margin: 18px 20px 4px;
+  border-bottom: 1px solid var(--line);
+}
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  border-bottom: 2px solid transparent;
+}
+.tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--gold);
+  font-weight: 600;
+}
+
+.view { padding: 16px 20px 0; }
+.hidden { display: none; }
+
+/* ---- Calendar / month list ---- */
+.month-select select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-family: var(--sans);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.month-list { display: flex; flex-direction: column; gap: 6px; }
+.month-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+}
+.month-row.done { background: var(--sage-soft); border-color: var(--sage-soft); }
+.mr-day {
+  font-family: var(--serif);
+  font-size: 13px;
+  width: 30px;
+  color: var(--ink-soft);
+}
+.mr-refs { flex: 1; font-size: 13.5px; color: var(--ink); }
+.mr-check {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--ink-soft);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: transparent;
+}
+.month-row.done .mr-check {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: #fff;
+}
+
+/* ---- Settings ---- */
+#settingsView h2 {
+  font-family: var(--serif);
+  font-size: 16px;
+  margin: 22px 0 6px;
+  color: var(--ink);
+}
+#settingsView h2:first-child { margin-top: 4px; }
+.hint {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+.pin-row { display: flex; gap: 8px; }
+.pin-row input {
+  flex: 1;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  font-size: 15px;
+  letter-spacing: 0.05em;
+}
+.btn-primary, .btn-secondary, .btn-danger {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
+  padding: 11px 16px;
+  font-size: 14px;
+}
+.btn-secondary {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+.btn-danger {
+  background: #fff;
+  color: #a13d3d;
+  border-color: #a13d3d;
+}
+.sync-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+.sync-status {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-top: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-fill { transition: none; }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>시편·잠언 365 | 매일 통독</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="mark">詩</span>
+    <div class="titles">
+      <h1>시편·잠언 365</h1>
+      <p>하루 한 편, 하루 한 장</p>
+    </div>
+    <button id="btnSync" class="icon-btn" title="동기화">⟲</button>
+  </div>
+</header>
+
+<main>
+
+  <section class="progress-strip" id="progressStrip">
+    <div class="progress-num">
+      <span id="doneCount">0</span><span class="of">/365</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-meta">
+      <span id="streakLabel">연속 0일</span>
+      <span id="pctLabel">0%</span>
+    </div>
+  </section>
+
+  <section class="today-card" id="todayCard">
+    <!-- filled by app.js -->
+  </section>
+
+  <section class="nav-tabs">
+    <button class="tab active" data-view="today">오늘</button>
+    <button class="tab" data-view="calendar">달력</button>
+    <button class="tab" data-view="settings">설정</button>
+  </section>
+
+  <section id="calendarView" class="view hidden">
+    <div class="month-select">
+      <select id="monthSelect"></select>
+    </div>
+    <div id="monthList" class="month-list"></div>
+  </section>
+
+  <section id="settingsView" class="view hidden">
+    <h2>기기 간 동기화</h2>
+    <p class="hint">PIN 번호로 여러 기기의 진행 상황을 동기화합니다. 기존에 쓰던 PIN을 그대로 입력하면 이어집니다.</p>
+    <div class="pin-row">
+      <input id="pinInput" type="text" inputmode="numeric" maxlength="8" placeholder="PIN (예: 5930)">
+      <button id="btnSavePin" class="btn-primary">저장</button>
+    </div>
+    <div class="sync-actions">
+      <button id="btnPush" class="btn-secondary">이 기기 → 서버로 업로드</button>
+      <button id="btnPull" class="btn-secondary">서버 → 이 기기로 가져오기</button>
+    </div>
+    <p class="sync-status" id="syncStatus">아직 동기화하지 않았습니다.</p>
+
+    <h2>읽기 계획 안내</h2>
+    <p class="hint">매일 시편 한 편, 잠언 한 장을 함께 읽는 전통적 통독표 방식입니다. 시편은 1~150편을 반복 순환하고, 잠언은 그 달의 날짜와 같은 장을 읽습니다 (예: 3월 7일 → 잠언 7장). 본문은 앱에 담지 않으니, 본인이 사용하는 성경으로 해당 장을 펼쳐 읽으신 뒤 묵상 질문에 답해보세요.</p>
+
+    <h2>데이터 초기화</h2>
+    <button id="btnReset" class="btn-danger">이 기기의 기록 모두 지우기</button>
+  </section>
+
+</main>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
