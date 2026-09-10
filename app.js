@@ -3,23 +3,9 @@
 
   const API_BASE = "https://bible365-api.yjjn2005.workers.dev";
   const STORAGE_KEY = "bible365_progress_v1";
+  const START_KEY = "bible365_start_date_v1";
   const PIN_KEY = "bible365_pin";
-
-  const MONTH_LENS = [31,28,31,30,31,30,31,31,30,31,30,31];
-
-  function monthDayToDoy(monthIdx, dom) {
-    let doy = dom;
-    for (let i = 0; i < monthIdx; i++) doy += MONTH_LENS[i];
-    return doy;
-  }
-
-  function todayDoy() {
-    const d = new Date();
-    let dom = d.getDate();
-    const mi = d.getMonth();
-    if (mi === 1 && dom === 29) dom = 28; // 2/29 -> treat as 2/28 entry
-    return monthDayToDoy(mi, dom);
-  }
+  const DAY_MS = 24 * 60 * 60 * 1000;
 
   function loadProgress() {
     try {
@@ -34,45 +20,64 @@
 
   let progress = loadProgress();
 
+  // ---------- Self-paced day: Day 1 = the day this app was first opened ----------
+  function getStartDate() {
+    let raw = localStorage.getItem(START_KEY);
+    if (!raw) {
+      raw = String(Date.now());
+      localStorage.setItem(START_KEY, raw);
+    }
+    return parseInt(raw, 10);
+  }
+
+  function currentDay() {
+    const start = getStartDate();
+    const startMidnight = new Date(start);
+    startMidnight.setHours(0, 0, 0, 0);
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const diff = Math.floor((now - startMidnight) / DAY_MS);
+    return Math.min(365, Math.max(1, diff + 1));
+  }
+
   function entryFor(day) {
     return READING_PLAN[day - 1];
   }
 
-  // ---------- Today card ----------
+  // ---------- Reading hero (today) ----------
   function renderToday() {
-    const doy = todayDoy();
-    const e = entryFor(doy);
-    const rec = progress[doy] || {};
-    const d = new Date();
-    const dateLabel = `${d.getMonth() + 1}월 ${d.getDate()}일`;
+    const day = currentDay();
+    const e = entryFor(day);
+    const rec = progress[day] || {};
 
     const card = document.getElementById("todayCard");
     card.innerHTML = `
-      <div class="tc-head">
-        <span class="tc-day">${doy}일째</span>
-        <span class="tc-date">${dateLabel}</span>
+      <div class="rh-day">
+        <div class="rh-day-num">${day}</div>
+        <div class="rh-day-label">일 차</div>
       </div>
-      <div class="tc-refs">
-        <div class="tc-ref">
-          <div class="tc-ref-label">시편</div>
-          <div class="tc-ref-value">${e.psalm}편</div>
+      <div class="rh-refs">
+        <div class="rh-ref">
+          <div class="rh-ref-label">시편</div>
+          <div class="rh-ref-value">${e.psalm}편</div>
         </div>
-        <div class="tc-ref">
-          <div class="tc-ref-label">잠언</div>
-          <div class="tc-ref-value">${e.proverb}장</div>
+        <div class="rh-ref">
+          <div class="rh-ref-label">잠언</div>
+          <div class="rh-ref-value">${e.proverb}장</div>
         </div>
       </div>
-      <div class="tc-prompts">
-        <div class="tc-prompt">
-          <div class="tc-prompt-q">${e.psalmPrompt}</div>
+      <div class="rh-divider"></div>
+      <div class="rh-prompts">
+        <div class="rh-prompt">
+          <div class="rh-prompt-q">${e.psalmPrompt}</div>
           <textarea id="psalmNote" placeholder="짧게 적어보세요 (선택)">${rec.psalmNote || ""}</textarea>
         </div>
-        <div class="tc-prompt">
-          <div class="tc-prompt-q">${e.proverbPrompt}</div>
+        <div class="rh-prompt">
+          <div class="rh-prompt-q">${e.proverbPrompt}</div>
           <textarea id="proverbNote" placeholder="짧게 적어보세요 (선택)">${rec.proverbNote || ""}</textarea>
         </div>
       </div>
-      <div class="tc-foot">
+      <div class="rh-foot">
         <button id="doneBtn" class="done-btn ${rec.done ? "checked" : ""}">
           ${rec.done ? "오늘 통독 완료 ✓" : "오늘 통독 완료로 표시"}
         </button>
@@ -80,14 +85,14 @@
     `;
 
     document.getElementById("psalmNote").addEventListener("change", (ev) => {
-      updateRecord(doy, { psalmNote: ev.target.value });
+      updateRecord(day, { psalmNote: ev.target.value });
     });
     document.getElementById("proverbNote").addEventListener("change", (ev) => {
-      updateRecord(doy, { proverbNote: ev.target.value });
+      updateRecord(day, { proverbNote: ev.target.value });
     });
     document.getElementById("doneBtn").addEventListener("click", () => {
-      const cur = progress[doy] || {};
-      updateRecord(doy, { done: !cur.done, doneAt: Date.now() });
+      const cur = progress[day] || {};
+      updateRecord(day, { done: !cur.done, doneAt: Date.now() });
       renderToday();
       renderProgressStrip();
     });
@@ -101,11 +106,11 @@
   // ---------- Progress strip ----------
   function computeStreak() {
     let streak = 0;
-    let doy = todayDoy();
-    while (doy >= 1) {
-      if (progress[doy] && progress[doy].done) {
+    let day = currentDay();
+    while (day >= 1) {
+      if (progress[day] && progress[day].done) {
         streak++;
-        doy--;
+        day--;
       } else {
         break;
       }
@@ -117,44 +122,47 @@
     const doneCount = Object.values(progress).filter((r) => r.done).length;
     document.getElementById("doneCount").textContent = doneCount;
     document.getElementById("progressFill").style.width = ((doneCount / 365) * 100).toFixed(1) + "%";
-    document.getElementById("pctLabel").textContent = Math.round((doneCount / 365) * 100) + "%";
     document.getElementById("streakLabel").textContent = `연속 ${computeStreak()}일`;
   }
 
-  // ---------- Calendar view ----------
-  const MONTH_NAMES = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+  // ---------- Range list (전체 목록) ----------
+  const RANGE_SIZE = 30;
+  const RANGE_COUNT = Math.ceil(365 / RANGE_SIZE);
 
-  function initCalendar() {
-    const sel = document.getElementById("monthSelect");
-    MONTH_NAMES.forEach((name, i) => {
+  function initRangeSelect() {
+    const sel = document.getElementById("rangeSelect");
+    for (let i = 0; i < RANGE_COUNT; i++) {
+      const from = i * RANGE_SIZE + 1;
+      const to = Math.min(365, (i + 1) * RANGE_SIZE);
       const opt = document.createElement("option");
       opt.value = i;
-      opt.textContent = name;
+      opt.textContent = `${from}일 ~ ${to}일`;
       sel.appendChild(opt);
-    });
-    sel.value = new Date().getMonth();
-    sel.addEventListener("change", () => renderMonthList(parseInt(sel.value, 10)));
-    renderMonthList(new Date().getMonth());
+    }
+    const todayRangeIdx = Math.floor((currentDay() - 1) / RANGE_SIZE);
+    sel.value = todayRangeIdx;
+    sel.addEventListener("change", () => renderRangeList(parseInt(sel.value, 10)));
+    renderRangeList(todayRangeIdx);
   }
 
-  function renderMonthList(monthIdx) {
-    const container = document.getElementById("monthList");
+  function renderRangeList(rangeIdx) {
+    const container = document.getElementById("rangeList");
     container.innerHTML = "";
-    const len = MONTH_LENS[monthIdx];
-    for (let dom = 1; dom <= len; dom++) {
-      const doy = monthDayToDoy(monthIdx, dom);
-      const e = entryFor(doy);
-      const rec = progress[doy] || {};
+    const from = rangeIdx * RANGE_SIZE + 1;
+    const to = Math.min(365, (rangeIdx + 1) * RANGE_SIZE);
+    for (let day = from; day <= to; day++) {
+      const e = entryFor(day);
+      const rec = progress[day] || {};
       const row = document.createElement("div");
-      row.className = "month-row" + (rec.done ? " done" : "");
+      row.className = "range-row" + (rec.done ? " done" : "");
       row.innerHTML = `
-        <span class="mr-day">${dom}일</span>
-        <span class="mr-refs">시편 ${e.psalm}편 · 잠언 ${e.proverb}장</span>
-        <span class="mr-check">✓</span>
+        <span class="rr-day">${day}일</span>
+        <span class="rr-refs">시편 ${e.psalm}편 · 잠언 ${e.proverb}장</span>
+        <span class="rr-check">✓</span>
       `;
       row.addEventListener("click", () => {
-        updateRecord(doy, { done: !rec.done, doneAt: Date.now() });
-        renderMonthList(monthIdx);
+        updateRecord(day, { done: !rec.done, doneAt: Date.now() });
+        renderRangeList(rangeIdx);
         renderProgressStrip();
         renderToday();
       });
@@ -172,7 +180,7 @@
         document.querySelectorAll(".view").forEach((v) => v.classList.add("hidden"));
         const view = tab.dataset.view;
         if (view === "today") {
-          document.getElementById("todayCard").scrollIntoView({ behavior: "smooth" });
+          window.scrollTo({ top: 0, behavior: "smooth" });
         } else {
           document.getElementById(view + "View").classList.remove("hidden");
         }
@@ -194,15 +202,19 @@
 
     document.getElementById("btnPush").addEventListener("click", () => pushSync());
     document.getElementById("btnPull").addEventListener("click", () => pullSync());
-    document.getElementById("btnSync").addEventListener("click", () => pullThenPush());
+    document.getElementById("btnSync").addEventListener("click", () => {
+      const tabSettings = document.querySelector('.tab[data-view="settings"]');
+      tabSettings.click();
+    });
 
     document.getElementById("btnReset").addEventListener("click", () => {
-      if (!confirm("이 기기의 모든 기록을 삭제할까요? 이 동작은 되돌릴 수 없습니다.")) return;
+      if (!confirm("이 기기의 모든 기록과 시작일을 삭제할까요? 이 동작은 되돌릴 수 없습니다.")) return;
       progress = {};
       saveProgress(progress);
+      localStorage.removeItem(START_KEY);
       renderToday();
       renderProgressStrip();
-      renderMonthList(new Date().getMonth());
+      initRangeSelect();
     });
   }
 
@@ -222,7 +234,7 @@
       const res = await fetch(API_BASE + "/sync", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pin, data: progress }),
+        body: JSON.stringify({ pin, data: { progress, startDate: getStartDate() } }),
       });
       if (!res.ok) throw new Error("서버 오류");
       setSyncStatus("업로드 완료: " + new Date().toLocaleString("ko-KR"));
@@ -239,23 +251,17 @@
       const res = await fetch(API_BASE + "/sync?pin=" + encodeURIComponent(pin));
       if (!res.ok) throw new Error("서버 오류");
       const json = await res.json();
-      if (!json.found) { setSyncStatus("서버에 저장된 기록이 없습니다."); return; }
-      progress = json.data || {};
+      if (!json.found || !json.data) { setSyncStatus("서버에 저장된 기록이 없습니다."); return; }
+      progress = json.data.progress || {};
       saveProgress(progress);
+      if (json.data.startDate) localStorage.setItem(START_KEY, String(json.data.startDate));
       renderToday();
       renderProgressStrip();
-      renderMonthList(new Date().getMonth());
+      initRangeSelect();
       setSyncStatus("가져오기 완료: " + new Date().toLocaleString("ko-KR"));
     } catch (err) {
       setSyncStatus("가져오기 실패: " + err.message);
     }
-  }
-
-  async function pullThenPush() {
-    // quick top-bar sync: try pull, then push current (merged manually by user via settings if conflict)
-    const pin = getPin();
-    if (!pin) { alert("설정 탭에서 먼저 PIN을 저장해주세요."); return; }
-    await pushSync();
   }
 
   // ---------- Init ----------
@@ -263,7 +269,7 @@
     renderToday();
     renderProgressStrip();
     initTabs();
-    initCalendar();
+    initRangeSelect();
     initSettings();
   });
 })();
