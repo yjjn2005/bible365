@@ -103,14 +103,14 @@ button { font-family: var(--sans); cursor: pointer; }
 }
 .rh-day-num {
   font-family: var(--display);
-  font-size: 54px;
+  font-size: 64px;
   font-weight: 600;
   color: var(--gold-bright);
   line-height: 1;
 }
 .rh-day-label {
-  margin-top: 4px;
-  font-size: 12px;
+  margin-top: 6px;
+  font-size: 15px;
   letter-spacing: 0.12em;
   color: var(--ivory-dim);
 }
@@ -129,16 +129,16 @@ button { font-family: var(--sans); cursor: pointer; }
   text-align: center;
 }
 .rh-ref-label {
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.1em;
   color: var(--gold);
 }
 .rh-ref-value {
   font-family: var(--display);
-  font-size: 27px;
+  font-size: 40px;
   font-weight: 600;
   color: var(--ivory);
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .rh-divider {
@@ -147,23 +147,23 @@ button { font-family: var(--sans); cursor: pointer; }
   background: linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
 }
 
-.rh-prompts { padding: 18px 20px 4px; }
-.rh-prompt { margin-bottom: 16px; }
+.rh-prompts { padding: 20px 20px 4px; }
+.rh-prompt { margin-bottom: 20px; }
 .rh-prompt-q {
-  font-size: 13px;
-  color: var(--ivory-dim);
-  line-height: 1.6;
-  margin-bottom: 8px;
+  font-size: 17px;
+  color: var(--ivory);
+  line-height: 1.65;
+  margin-bottom: 10px;
 }
 .rh-prompt textarea {
   width: 100%;
-  min-height: 52px;
+  min-height: 60px;
   border: 1px solid var(--line);
   background: rgba(0,0,0,0.15);
   color: var(--ivory);
-  padding: 9px 11px;
+  padding: 11px 13px;
   font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 16px;
   resize: vertical;
 }
 .rh-prompt textarea::placeholder { color: #56505f; }
@@ -172,11 +172,11 @@ button { font-family: var(--sans); cursor: pointer; }
 .rh-foot { padding: 6px 20px 22px; }
 .done-btn {
   width: 100%;
-  padding: 13px;
+  padding: 16px;
   border: 1px solid var(--gold-dim);
   background: transparent;
   color: var(--gold-bright);
-  font-size: 14px;
+  font-size: 16.5px;
   letter-spacing: 0.03em;
   font-weight: 500;
 }
@@ -198,11 +198,11 @@ button { font-family: var(--sans); cursor: pointer; }
 }
 .progress-num {
   font-family: var(--serif);
-  font-size: 14px;
+  font-size: 16px;
   color: var(--ivory);
 }
 .progress-num .of { color: var(--ivory-dim); margin-left: 3px; }
-.streak-label { font-size: 12.5px; color: var(--gold); }
+.streak-label { font-size: 14.5px; color: var(--gold); }
 .progress-bar {
   height: 3px;
   background: var(--line-soft);
@@ -224,8 +224,8 @@ button { font-family: var(--sans); cursor: pointer; }
   flex: 1;
   background: none;
   border: none;
-  padding: 11px 0;
-  font-size: 13.5px;
+  padding: 12px 0;
+  font-size: 15.5px;
   color: var(--ivory-dim);
   border-bottom: 1px solid transparent;
   margin-bottom: -1px;
@@ -241,12 +241,12 @@ button { font-family: var(--sans); cursor: pointer; }
 /* ---- Range list (전체 목록) ---- */
 .range-select select {
   width: 100%;
-  padding: 11px 12px;
+  padding: 13px 12px;
   border: 1px solid var(--line);
   background: var(--panel-2);
   color: var(--ivory);
   font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 16px;
   margin-bottom: 12px;
 }
 .range-list { display: flex; flex-direction: column; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); }
@@ -254,21 +254,21 @@ button { font-family: var(--sans); cursor: pointer; }
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 11px 12px;
+  padding: 14px 12px;
   background: var(--panel);
 }
 .range-row.done { background: var(--emerald-dim); }
 .rr-day {
   font-family: var(--serif);
-  font-size: 12.5px;
-  width: 44px;
+  font-size: 15px;
+  width: 48px;
   color: var(--ivory-dim);
 }
 .range-row.done .rr-day { color: var(--emerald-bright); }
-.rr-refs { flex: 1; font-size: 13px; color: var(--ivory); }
+.rr-refs { flex: 1; font-size: 16px; color: var(--ivory); }
 .rr-check {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border: 1px solid var(--ivory-dim);
   border-radius: 50%;
   display: flex;
@@ -287,34 +287,34 @@ button { font-family: var(--sans); cursor: pointer; }
 /* ---- Settings ---- */
 #settingsView h2 {
   font-family: var(--serif);
-  font-size: 15px;
-  margin: 24px 0 7px;
+  font-size: 17px;
+  margin: 26px 0 8px;
   color: var(--gold-bright);
   font-weight: 500;
 }
 #settingsView h2:first-child { margin-top: 2px; }
 .hint {
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: var(--ivory-dim);
-  line-height: 1.7;
+  line-height: 1.75;
   margin: 0 0 10px;
 }
 .pin-row { display: flex; gap: 8px; }
 .pin-row input {
   flex: 1;
-  padding: 11px 12px;
+  padding: 13px 12px;
   border: 1px solid var(--line);
   background: var(--panel-2);
   color: var(--ivory);
-  font-size: 14.5px;
+  font-size: 16px;
   letter-spacing: 0.05em;
 }
 .btn-gold, .btn-line, .btn-danger {
   border: 1px solid var(--gold-dim);
   background: transparent;
   color: var(--gold-bright);
-  padding: 11px 16px;
-  font-size: 13.5px;
+  padding: 13px 16px;
+  font-size: 15px;
 }
 .btn-gold { background: var(--gold-dim); color: var(--bg); border-color: var(--gold-dim); font-weight: 600; }
 .btn-line { color: var(--ivory); border-color: var(--line); }
@@ -326,7 +326,7 @@ button { font-family: var(--sans); cursor: pointer; }
   margin-top: 12px;
 }
 .sync-status {
-  font-size: 12px;
+  font-size: 13.5px;
   color: var(--ivory-dim);
   margin-top: 10px;
 }
