@@ -54,7 +54,6 @@
   function renderToday() {
     const day = currentDay();
     const e = entryFor(day);
-    const rec = progress[day] || {};
 
     const card = document.getElementById("todayCard");
     card.innerHTML = `
@@ -74,36 +73,7 @@
           <div class="rh-ref-link">본문 읽기 →</div>
         </a>
       </div>
-      <div class="rh-divider"></div>
-      <div class="rh-prompts">
-        <div class="rh-prompt">
-          <div class="rh-prompt-q">${e.psalmPrompt}</div>
-          <textarea id="psalmNote" placeholder="짧게 적어보세요 (선택)">${rec.psalmNote || ""}</textarea>
-        </div>
-        <div class="rh-prompt">
-          <div class="rh-prompt-q">${e.proverbPrompt}</div>
-          <textarea id="proverbNote" placeholder="짧게 적어보세요 (선택)">${rec.proverbNote || ""}</textarea>
-        </div>
-      </div>
-      <div class="rh-foot">
-        <button id="doneBtn" class="done-btn ${rec.done ? "checked" : ""}">
-          ${rec.done ? "오늘 통독 완료 ✓" : "오늘 통독 완료로 표시"}
-        </button>
-      </div>
     `;
-
-    document.getElementById("psalmNote").addEventListener("change", (ev) => {
-      updateRecord(day, { psalmNote: ev.target.value });
-    });
-    document.getElementById("proverbNote").addEventListener("change", (ev) => {
-      updateRecord(day, { proverbNote: ev.target.value });
-    });
-    document.getElementById("doneBtn").addEventListener("click", () => {
-      const cur = progress[day] || {};
-      updateRecord(day, { done: !cur.done, doneAt: Date.now() });
-      renderToday();
-      renderProgressStrip();
-    });
   }
 
   function updateRecord(day, patch) {
