@@ -63,14 +63,20 @@
       </div>
       <div class="rh-refs">
         <a class="rh-ref" href="${bibleUrl('PSA', e.psalm)}" target="_blank" rel="noopener">
-          <div class="rh-ref-label">시편</div>
-          <div class="rh-ref-value">${e.psalm}편</div>
-          <div class="rh-ref-link">본문 읽기 →</div>
+          <span class="rh-ref-order">1</span>
+          <span class="rh-ref-body">
+            <div class="rh-ref-label">시편</div>
+            <div class="rh-ref-value">${e.psalm}편</div>
+            <div class="rh-ref-link">본문 읽기 →</div>
+          </span>
         </a>
         <a class="rh-ref" href="${bibleUrl('PRO', e.proverb)}" target="_blank" rel="noopener">
-          <div class="rh-ref-label">잠언</div>
-          <div class="rh-ref-value">${e.proverb}장</div>
-          <div class="rh-ref-link">본문 읽기 →</div>
+          <span class="rh-ref-order">2</span>
+          <span class="rh-ref-body">
+            <div class="rh-ref-label">잠언</div>
+            <div class="rh-ref-value">${e.proverb}장</div>
+            <div class="rh-ref-link">본문 읽기 →</div>
+          </span>
         </a>
       </div>
     `;

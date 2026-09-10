@@ -117,17 +117,19 @@ button { font-family: var(--sans); cursor: pointer; }
 
 .rh-refs {
   display: flex;
+  flex-direction: column;
   gap: 1px;
   margin: 18px 20px 0;
   background: var(--line);
   border: 1px solid var(--line);
 }
 .rh-ref {
-  flex: 1;
   background: var(--panel-2);
-  padding: 16px 14px;
-  text-align: center;
-  display: block;
+  padding: 18px 16px;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
   text-decoration: none;
   border: 1px solid transparent;
   transition: border-color 0.15s ease, background 0.15s ease;
@@ -136,6 +138,14 @@ button { font-family: var(--sans); cursor: pointer; }
   border-color: var(--gold-dim);
   background: #271f2e;
 }
+.rh-ref-order {
+  font-family: var(--serif);
+  font-size: 12px;
+  color: var(--gold-dim);
+  width: 16px;
+  flex-shrink: 0;
+}
+.rh-ref-body { flex: 1; }
 .rh-ref-label {
   font-size: 14px;
   letter-spacing: 0.1em;
@@ -143,13 +153,13 @@ button { font-family: var(--sans); cursor: pointer; }
 }
 .rh-ref-value {
   font-family: var(--display);
-  font-size: 40px;
+  font-size: 34px;
   font-weight: 600;
   color: var(--ivory);
-  margin-top: 6px;
+  margin-top: 4px;
 }
 .rh-ref-link {
-  margin-top: 8px;
+  margin-top: 6px;
   font-size: 12px;
   letter-spacing: 0.03em;
   color: var(--gold-dim);
