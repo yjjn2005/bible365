@@ -59,22 +59,13 @@
     card.innerHTML = `
       <div class="rh-day">
         <div class="rh-day-num">${day}</div>
-        <div class="rh-day-label">일 차</div>
+        <div class="rh-day-label">일 차 · ${e.label} 전체 ${e.book === "psalm" ? "150편 중" : "완독 후 반복"}</div>
       </div>
       <div class="rh-refs">
-        <a class="rh-ref" href="${bibleUrl('PSA', e.psalm)}" target="_blank" rel="noopener">
-          <span class="rh-ref-order">1</span>
+        <a class="rh-ref" href="${bibleUrl(e.code, e.chapter)}" target="_blank" rel="noopener">
           <span class="rh-ref-body">
-            <div class="rh-ref-label">시편</div>
-            <div class="rh-ref-value">${e.psalm}편</div>
-            <div class="rh-ref-link">본문 읽기 →</div>
-          </span>
-        </a>
-        <a class="rh-ref" href="${bibleUrl('PRO', e.proverb)}" target="_blank" rel="noopener">
-          <span class="rh-ref-order">2</span>
-          <span class="rh-ref-body">
-            <div class="rh-ref-label">잠언</div>
-            <div class="rh-ref-value">${e.proverb}장</div>
+            <div class="rh-ref-label">${e.label}</div>
+            <div class="rh-ref-value">${e.chapter}${e.suffix}</div>
             <div class="rh-ref-link">본문 읽기 →</div>
           </span>
         </a>
@@ -141,8 +132,8 @@
       row.className = "range-row" + (rec.done ? " done" : "");
       row.innerHTML = `
         <span class="rr-day">${day}일</span>
-        <span class="rr-refs">시편 ${e.psalm}편 · 잠언 ${e.proverb}장</span>
-        <a class="rr-read" href="${bibleUrl('PSA', e.psalm)}" target="_blank" rel="noopener" title="시편 본문 읽기">읽기</a>
+        <span class="rr-refs">${e.label} ${e.chapter}${e.suffix}</span>
+        <a class="rr-read" href="${bibleUrl(e.code, e.chapter)}" target="_blank" rel="noopener" title="${e.label} 본문 읽기">읽기</a>
         <span class="rr-check">✓</span>
       `;
       row.querySelector(".rr-read").addEventListener("click", (ev) => ev.stopPropagation());
